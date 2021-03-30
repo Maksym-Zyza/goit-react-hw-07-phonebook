@@ -1,28 +1,37 @@
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/contacts/contacts-actions';
-import style from './ContactList.module.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as operations from "../../redux/contacts/contacts-operations";
+import style from "./ContactList.module.css";
 
-const ContactList = ({ contacts, onDelBtnClick }) => {
-  return (
-    <ul>
-      {contacts.map(contact => (
-        <li key={contact.id} className={style.listItem}>
-          <span className={style.name}>{contact.name}:</span>
-          <span className={style.namber}>{contact.number}</span>
-          <button
-            className={style.btn}
-            type="button"
-            id={contact.id}
-            onClick={event => onDelBtnClick(event.target.id)}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
-};
+class ContactList extends React.Component {
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
+
+  render() {
+    const { contacts, onDelBtnClick } = this.props;
+    console.log("contacts>>", contacts);
+    return (
+      <ul>
+        {contacts.map((contact) => (
+          <li key={contact.id} className={style.listItem}>
+            <span className={style.name}>{contact.name}:</span>
+            <span className={style.namber}>{contact.number}</span>
+            <button
+              className={style.btn}
+              type="button"
+              id={contact.id}
+              onClick={(event) => onDelBtnClick(event.target.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
 
 ContactList.propTypes = PropTypes.shape({
   contacts: PropTypes.arrayOf(PropTypes.object.isRequired),
@@ -31,7 +40,7 @@ ContactList.propTypes = PropTypes.shape({
 
 const contactListFilter = (items, filter) => {
   return items.filter(({ name }) =>
-    name.toLowerCase().includes(filter.toLowerCase()),
+    name.toLowerCase().includes(filter.toLowerCase())
   );
 };
 
@@ -39,12 +48,9 @@ const mapStateToProps = ({ contacts: { items, filter } }) => ({
   contacts: contactListFilter(items, filter),
 });
 
-// const mapStateToProps = state => ({
-//   contacts: state.contacts.items,
-// });
-
-const mapDispatchToProps = dispatch => ({
-  onDelBtnClick: id => dispatch(actions.deleteContact(id)),
+const mapDispatchToProps = (dispatch) => ({
+  onDelBtnClick: (id) => dispatch(operations.deleteContact(id)),
+  fetchContacts: () => dispatch(operations.fetchContacts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

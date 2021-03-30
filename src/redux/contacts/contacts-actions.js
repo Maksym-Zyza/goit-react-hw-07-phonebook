@@ -1,25 +1,22 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 
-export const addContact = createAction('Contact/add');
+// Оновлення
+export const fetchContactRequest = createAction("contacts/fetchContactRequest");
+export const fetchContactSuccess = createAction("contacts/fetchContactSuccess");
+export const fetchContactError = createAction("contacts/fetchContactError");
 
-export const deleteContact = createAction('Contact/delete');
+// Додавання
+export const addContactRequest = createAction("contacts/addContactRequest");
+export const addContactSuccess = createAction("contacts/addContactSuccess");
+export const addContactError = createAction("contacts/addContactError");
 
-export const filterContacts = createAction('Contact/filter');
+// Видалення
+export const delContactRequest = createAction("contacts/delContactRequest");
+export const delContactSuccess = createAction("contacts/delContactSuccess");
+export const delContactError = createAction("contacts/delContactError");
 
-// =========== До Redux Tookit =========
-// import types from './contacts-types';
+export const filterContacts = createAction("Contact/filter");
 
-// export const addContact = obj => ({
-//   type: types.ADD,
-//   payload: { ...obj },
-// });
-
-// export const deleteContact = id => ({
-//   type: types.DELETE,
-//   payload: id,
-// });
-
-// export const filterContacts = value => ({
-//   type: types.FILTER,
-//   payload: value,
-// });
+// ====== До contacts-operetions
+// export const addContact = createAction("Contact/add");
+// export const deleteContact = createAction("Contact/delete");

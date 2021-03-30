@@ -15,3 +15,10 @@
   text-align: center;
   color: #01b4e4;
 }
+
+.loaderDiv {
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  /* align-items: center; */
+}

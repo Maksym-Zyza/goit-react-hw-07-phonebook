@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/contacts/contacts-actions';
-import PropTypes from 'prop-types';
-import css from './ContactForm.module.css';
+import { Component } from "react";
+import { connect } from "react-redux";
+import * as operations from "../../redux/contacts/contacts-operations";
+import PropTypes from "prop-types";
+import css from "./ContactForm.module.css";
 
 class ContactForm extends Component {
   static propTypes = {
@@ -11,28 +10,28 @@ class ContactForm extends Component {
   };
 
   state = {
-    name: '',
-    number: '',
+    name: "",
+    number: "",
   };
 
-  handelChange = e => {
+  handelChange = (e) => {
     const { name, value } = e.currentTarget;
 
-    this.setState({ [name]: value, id: uuidv4() });
+    this.setState({ [name]: value });
   };
 
   resetForm = () => {
-    this.setState({ name: '', number: '' });
+    this.setState({ name: "", number: "" });
   };
 
-  handleSabmit = e => {
+  handleSabmit = (e) => {
     e.preventDefault();
     const { name, number } = this.state;
     const { contacts } = this.props;
 
-    if (contacts.some(contact => contact.name === name)) {
+    if (contacts.some((contact) => contact.name === name)) {
       return alert(`Name "${name}" already exists, please enter another name.`);
-    } else this.props.onSubmit({ name, number, id: uuidv4() });
+    } else this.props.onSubmit({ name, number });
 
     this.resetForm();
   };
@@ -79,12 +78,12 @@ class ContactForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   contacts: state.contacts.items,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: obj => dispatch(actions.addContact(obj)),
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (obj) => dispatch(operations.addContact(obj)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
