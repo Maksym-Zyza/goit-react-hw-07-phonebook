@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as operations from "../../redux/contacts/contacts-operations";
+import * as selectors from "../../redux/contacts/contacts-selectors";
 import style from "./ContactList.module.css";
 
 class ContactList extends React.Component {
@@ -11,7 +12,6 @@ class ContactList extends React.Component {
 
   render() {
     const { contacts, onDelBtnClick } = this.props;
-    console.log("contacts>>", contacts);
     return (
       <ul>
         {contacts.map((contact) => (
@@ -38,14 +38,8 @@ ContactList.propTypes = PropTypes.shape({
   onDelBtnClick: PropTypes.func.isRequired,
 }).isRequired;
 
-const contactListFilter = (items, filter) => {
-  return items.filter(({ name }) =>
-    name.toLowerCase().includes(filter.toLowerCase())
-  );
-};
-
-const mapStateToProps = ({ contacts: { items, filter } }) => ({
-  contacts: contactListFilter(items, filter),
+const mapStateToProps = (state) => ({
+  contacts: selectors.getContactListFilter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

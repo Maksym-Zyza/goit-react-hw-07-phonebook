@@ -5,6 +5,7 @@ import ContactList from "./components/ContactList/ContactList";
 import ContactForm from "./components/ContactForm/ContactForm";
 import Nothing from "./components/Nothing";
 import Loader from "./components/Loader.jsx";
+import * as selectors from "./redux/contacts/contacts-selectors";
 import css from "./App.module.css";
 
 const App = ({ contacts, isLoading }) => {
@@ -24,8 +25,8 @@ const App = ({ contacts, isLoading }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state.contacts.items,
-  isLoading: state.contacts.loading,
+  contacts: selectors.getContacts(state),
+  isLoading: selectors.getLoading(state),
 });
 
 export default connect(mapStateToProps)(App);
